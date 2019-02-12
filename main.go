@@ -23,7 +23,6 @@ const (
 	configFilePath = "config.yaml"
 	layoutDir      = "layouts"
 	contentDir     = "content"
-	outputDir      = "docs"
 	staticDir      = "static"
 )
 
@@ -35,11 +34,12 @@ func Init() {
 
 func usage() {
 	fmt.Print(
-		`Usage: orator [-h] [-scaffold]
+		`Usage: orator [-h] [-scaffold] [-g gendir]
 
 Options:
 	-h - print this message
 	-scaffold - scaffold a new project into the current directory
+	-g - directory to place generated html
 
 Usage:
 	Invoke orator to generate the site in the gen directory int the current working directory.
@@ -49,8 +49,10 @@ Usage:
 
 func main() {
 	var showUsage, doScaffold bool
+	var gendir string
 	flag.BoolVar(&showUsage, "h", false, "Show help")
 	flag.BoolVar(&doScaffold, "scaffold", false, "Make the required directory structure in this directory")
+	flag.StringVar(&gendir, "g", "docs", "directory to place generated html")
 	flag.Parse()
 	if showUsage {
 		usage()
@@ -67,7 +69,7 @@ func main() {
 	SiteConfig = new(config.SiteConfig)
 	SiteConfig.ReadConfig(configFilePath)
 	gen.LoadLayouts(layoutDir, Layouts, RootTemplate, Fm, SiteConfig)
-	err := gen.GenerateSite(contentDir, outputDir, staticDir, Fm, Layouts, RootTemplate, SiteConfig)
+	err := gen.GenerateSite(contentDir, gendir, staticDir, Fm, Layouts, RootTemplate, SiteConfig)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -85,6 +87,6 @@ func scaffold() {
 	f.Write(out)
 	os.Mkdir(layoutDir, os.ModePerm)
 	os.Mkdir(contentDir, os.ModePerm)
-	os.Mkdir(outputDir, os.ModePerm)
+	os.Mkdir(gendir, os.ModePerm)
 	os.Mkdir(staticDir, os.ModePerm)
 }
