@@ -32,23 +32,23 @@ func Init() {
 
 func usage() {
 	fmt.Print(
-		`Usage: orator [-h] [-scaffold] [-g gendir]
+		`usage: orator [-h] [-s] [-g gendir]
 
-Options:
+options:
 	-h - print this message
-	-scaffold - scaffold a new project into the current directory
+	-s - scaffold a new project into the current directory
 	-g - directory to place generated html
 
-Usage:
-	Invoke orator to generate the site in the gen directory int the current working directory.
+usage:
+	invoke orator to generate the site in the gen directory in the current working directory.
 `,
 	)
 }
 
 func main() {
 	var showUsage, doScaffold bool
-	flag.BoolVar(&showUsage, "h", false, "Show help")
-	flag.BoolVar(&doScaffold, "scaffold", false, "Make the required directory structure in this directory")
+	flag.BoolVar(&showUsage, "h", false, "show help")
+	flag.BoolVar(&doScaffold, "s", false, "make the required directory structure in this directory")
 	flag.StringVar(&gendir, "g", "docs", "directory to place generated html")
 	flag.Parse()
 	if showUsage {
@@ -71,7 +71,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Print("Job's done.")
+	log.Print("job's done.")
 }
 
 func scaffold() {

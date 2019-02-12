@@ -22,25 +22,25 @@ func GenerateSite(contentDir, outputDir, staticDir string, fm *util.FrontMatter,
 			return makePage(path, info, contentDir, fm, layouts, rootTpl, conf, outputDir, err)
 		},
 	)
-
+	log.Print("walked filepath")
 	if err != nil {
 		return err
 	}
 
 	err = copyToDir(staticDir, outputDir)
-
+	log.Print("copied to dir")
 	if err != nil {
 		return err
 	}
 
-	log.Print("Static files copied successfully")
+	log.Print("static files copied successfully")
 
 	return nil
 }
 
 func makePage(path string, info os.FileInfo, prefix string, fm *util.FrontMatter,
-	layouts map[string]Layout, rootTpl *template.Template, conf *config.SiteConfig,
-	outputDir string, err error) error {
+			  layouts map[string]Layout, rootTpl *template.Template, conf *config.SiteConfig,
+			  outputDir string, err error) error {
 
 	if err != nil {
 		log.Fatal(err)
@@ -66,7 +66,7 @@ func makePage(path string, info os.FileInfo, prefix string, fm *util.FrontMatter
 		pagePath := strings.TrimSuffix(noPrefix, filepath.Ext(noPrefix)) + ".html"
 		ioutil.WriteFile(filepath.Join(outputDir, pagePath), []byte(generatedPage), os.ModePerm)
 
-		log.Printf("Generated page '%s'", noPrefix)
+		log.Printf("generated page '%s'", noPrefix)
 	}
 
 	return nil

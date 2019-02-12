@@ -45,10 +45,10 @@ func LoadLayouts(dirpath string, layouts map[string]Layout, rootTemplate *templa
 			yaml.Unmarshal([]byte(front), &lfm)
 			_, err = rootTemplate.Parse(body)
 			if err != nil {
-				log.Fatal(err)
+				log.Fatal("error generating template '%s' '%s'", tempateName, err)
 			}
 			layouts[templateName] = Layout{templateName, lfm}
-			log.Printf("Loaded layout '%s'.", templateName)
+			log.Printf("loaded layout '%s'.", templateName)
 		}
 	}
 }
