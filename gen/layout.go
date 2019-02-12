@@ -9,8 +9,8 @@ import (
 
 	"gopkg.in/yaml.v2"
 
-	"github.com/tudurom/orator/config"
-	"github.com/tudurom/orator/util"
+	"github.com/adamthebaron/orator/config"
+	"github.com/adamthebaron/orator/util"
 )
 
 // Layout metadata

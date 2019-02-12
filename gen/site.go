@@ -9,8 +9,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/tudurom/orator/config"
-	"github.com/tudurom/orator/util"
+	"github.com/adamthebaron/orator/config"
+	"github.com/adamthebaron/orator/util"
 )
 
 func GenerateSite(contentDir, outputDir, staticDir string, fm *util.FrontMatter, layouts map[string]Layout,
