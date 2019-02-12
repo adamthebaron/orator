@@ -8,7 +8,7 @@ import (
 )
 
 // site configuration from config.yaml
-type siteconfig struct {
+type SiteConf struct {
 	title       string
 	subtitle    string
 	description string
@@ -17,7 +17,7 @@ type siteconfig struct {
 	extra       map[string]interface{}
 }
 
-func (sc *SiteConfig) ReadConfig(fpath string) {
+func (sc *SiteConf) ReadConf(fpath string) {
 	contents, err := ioutil.ReadFile(fpath)
 
 	if err != nil {

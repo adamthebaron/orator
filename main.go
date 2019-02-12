@@ -17,7 +17,7 @@ import (
 var fm *util.FrontMatter
 var layouts map[string]gen.Layout
 var roottemplate *template.Template
-var siteconf *config.siteconf
+var siteconf *config.SiteConf
 var gendir string
 var sitedir string
 var confpath = "config.yaml"
@@ -63,7 +63,7 @@ func main() {
 
 	Init()
 	log.Print("init done")
-	siteconf = new(config.siteconf)
+	siteconf = new(config.SiteConf)
 	siteconf.ReadConfig(confpath)
 	gen.Loadlayouts(layoutDir, layouts, roottemplate, fm, siteconf)
 	log.Print("loaded layout")
@@ -75,7 +75,7 @@ func main() {
 }
 
 func scaffold() {
-	conf := config.siteconf{}
+	conf := config.SiteConf{}
 	f, err := os.Create(confpath)
 	if err != nil {
 		log.Fatal(err)
