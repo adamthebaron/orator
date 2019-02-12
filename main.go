@@ -23,7 +23,7 @@ const (
 	configFilePath = "config.yaml"
 	layoutDir      = "layouts"
 	contentDir     = "content"
-	outputDir      = "gen"
+	outputDir      = "docs"
 	staticDir      = "static"
 )
 
