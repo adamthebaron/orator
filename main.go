@@ -19,13 +19,10 @@ var Layouts map[string]gen.Layout
 var RootTemplate *template.Template
 var SiteConfig *config.SiteConfig
 var gendir string
-
-const (
-	configFilePath = "config.yaml"
-	layoutDir      = "layouts"
-	contentDir     = "content"
-	staticDir      = "static"
-)
+var configFilePath = "config.yaml"
+var layoutDir      = "layouts"
+var contentDir     = "content"
+var staticDir      = "static"
 
 func Init() {
 	Fm = util.NewFrontMatter("---")
