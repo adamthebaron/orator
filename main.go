@@ -18,6 +18,7 @@ var Fm *util.FrontMatter
 var Layouts map[string]gen.Layout
 var RootTemplate *template.Template
 var SiteConfig *config.SiteConfig
+var gendir string
 
 const (
 	configFilePath = "config.yaml"
@@ -49,7 +50,6 @@ Usage:
 
 func main() {
 	var showUsage, doScaffold bool
-	var gendir string
 	flag.BoolVar(&showUsage, "h", false, "Show help")
 	flag.BoolVar(&doScaffold, "scaffold", false, "Make the required directory structure in this directory")
 	flag.StringVar(&gendir, "g", "docs", "directory to place generated html")
