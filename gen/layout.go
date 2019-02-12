@@ -13,13 +13,13 @@ import (
 	"github.com/adamthebaron/orator/util"
 )
 
-// Layout metadata
-type Layout struct {
-	Name        string
-	FrontMatter map[string]interface{}
+// layout metadata
+type layout struct {
+	name        string
+	frontmatter map[string]interface{}
 }
 
-// Load layouts from the layouts directory
+// load layouts from the layouts directory
 func LoadLayouts(dirpath string, layouts map[string]Layout, rootTemplate *template.Template, fm *util.FrontMatter, conf *config.SiteConfig) {
 	files, err := ioutil.ReadDir(dirpath)
 	if err != nil {
@@ -28,9 +28,9 @@ func LoadLayouts(dirpath string, layouts map[string]Layout, rootTemplate *templa
 
 	for _, file := range files {
 		if !file.IsDir() {
-			// Relative pathname from the project root
+			// relative pathname from the project root
 			fileName := dirpath + "/" + file.Name()
-			// Template's name is file's base name without suffix
+			// template's name is file's base name without suffix
 			templateName := strings.TrimSuffix(file.Name(), filepath.Ext(fileName))
 			buf, err := ioutil.ReadFile(fileName)
 			if err != nil {

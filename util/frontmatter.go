@@ -5,23 +5,23 @@ import (
 	"io"
 )
 
-// State used in reading the front matter.
+// state used in reading the front matter.
 const (
 	stateStart         = 0
-	stateInFrontMatter = 1
+	stateInfrontmatter = 1
 	stateInBody        = 2
 )
 
-// Front matter reader.
-type FrontMatter struct {
+// front matter reader.
+type frontmatter struct {
 	tag string
 }
 
-func NewFrontMatter(tag string) *FrontMatter {
-	return &FrontMatter{tag}
+func Newfrontmatter(tag string) *frontmatter {
+	return &frontmatter{tag}
 }
 
-func (fm *FrontMatter) Parse(input io.Reader) (front, body string, err error) {
+func (fm *frontmatter) Parse(input io.Reader) (front, body string, err error) {
 	s := bufio.NewScanner(input)
 	front, body = "", ""
 	state := stateStart
@@ -31,7 +31,7 @@ func (fm *FrontMatter) Parse(input io.Reader) (front, body string, err error) {
 		if lines == 0 && t != fm.tag {
 			state = stateInBody
 		}
-		if state == stateInFrontMatter && t != fm.tag {
+		if state == stateInfrontmatter && t != fm.tag {
 			front += t + "\n"
 		} else if state == stateInBody {
 			body += t + "\n"

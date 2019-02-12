@@ -14,33 +14,32 @@ import (
 	"github.com/adamthebaron/orator/util"
 )
 
-var Fm *util.FrontMatter
-var Layouts map[string]gen.Layout
-var RootTemplate *template.Template
-var SiteConfig *config.SiteConfig
+var fm *util.FrontMatter
+var layouts map[string]gen.Layout
+var roottemplate *template.Template
+var siteconf *config.siteconf
 var gendir string
-var configFilePath = "config.yaml"
-var layoutDir      = "layouts"
-var contentDir     = "content"
-var staticDir      = "static"
+var sitedir string
+var confpath = "config.yaml"
+var layoutDir = "layouts"
+var contentDir = "content"
+var staticDir = "static"
 
 func Init() {
-	Fm = util.NewFrontMatter("---")
-	Layouts = make(map[string]gen.Layout)
-	RootTemplate = template.New("root")
+	fm = util.NewFrontMatter("---")
+	layouts = make(map[string]gen.Layout)
+	roottemplate = template.New("root")
 }
 
 func usage() {
 	fmt.Print(
-		`usage: orator [-h] [-s] [-g gendir]
+		`usage: orator [-h] [-s] [-g gendir] [-d sitedir]
 
 options:
 	-h - print this message
 	-s - scaffold a new project into the current directory
 	-g - directory to place generated html
-
-usage:
-	invoke orator to generate the site in the gen directory in the current working directory.
+	-s - directory containing stuff to generate (default is cwd)
 `,
 	)
 }
@@ -50,6 +49,7 @@ func main() {
 	flag.BoolVar(&showUsage, "h", false, "show help")
 	flag.BoolVar(&doScaffold, "s", false, "make the required directory structure in this directory")
 	flag.StringVar(&gendir, "g", "docs", "directory to place generated html")
+	flag.StringVar(&sitedir, "s", ".", "directory containing stuff to generate")
 	flag.Parse()
 	if showUsage {
 		usage()
@@ -63,11 +63,11 @@ func main() {
 
 	Init()
 	log.Print("init done")
-	SiteConfig = new(config.SiteConfig)
-	SiteConfig.ReadConfig(configFilePath)
-	gen.LoadLayouts(layoutDir, Layouts, RootTemplate, Fm, SiteConfig)
+	siteconf = new(config.siteconf)
+	siteconf.ReadConfig(confpath)
+	gen.Loadlayouts(layoutDir, layouts, roottemplate, fm, siteconf)
 	log.Print("loaded layout")
-	err := gen.GenerateSite(contentDir, gendir, staticDir, Fm, Layouts, RootTemplate, SiteConfig)
+	err := gen.GenerateSite(contentDir, gendir, staticDir, fm, layouts, roottemplate, siteconf)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -75,8 +75,8 @@ func main() {
 }
 
 func scaffold() {
-	conf := config.SiteConfig{}
-	f, err := os.Create(configFilePath)
+	conf := config.siteconf{}
+	f, err := os.Create(confpath)
 	if err != nil {
 		log.Fatal(err)
 	}

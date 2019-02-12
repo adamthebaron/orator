@@ -7,14 +7,14 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-// Site configuration from config.yaml
-type SiteConfig struct {
-	Title       string
-	Subtitle    string
-	Description string
-	Keywords    string
-	Author      string
-	Extra       map[string]interface{}
+// site configuration from config.yaml
+type siteconfig struct {
+	title       string
+	subtitle    string
+	description string
+	keywords    string
+	author      string
+	extra       map[string]interface{}
 }
 
 func (sc *SiteConfig) ReadConfig(fpath string) {
