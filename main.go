@@ -62,10 +62,11 @@ func main() {
 	}
 
 	Init()
-
+	log.Print("init done")
 	SiteConfig = new(config.SiteConfig)
 	SiteConfig.ReadConfig(configFilePath)
 	gen.LoadLayouts(layoutDir, Layouts, RootTemplate, Fm, SiteConfig)
+	log.Print("loaded layout")
 	err := gen.GenerateSite(contentDir, gendir, staticDir, Fm, Layouts, RootTemplate, SiteConfig)
 	if err != nil {
 		log.Fatal(err)
